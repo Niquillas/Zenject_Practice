@@ -7,7 +7,7 @@ public class ActivityInstallerHealthSystem : MonoInstaller<ActivityInstallerHeal
     {
         Container.BindInterfacesAndSelfTo<ControllerHealthSystem>().FromNew().AsSingle().NonLazy();
 
-        Container.Bind<ModelHealthStateNormal>().FromNew().AsSingle().Lazy();
-        Container.Bind<ModelHealthStateInvulnerable>().FromNew().AsSingle().Lazy();
+        Container.Bind<ObjectHealthStateNormal>().FromNew().AsSingle().Lazy();
+        Container.Bind<ObjectHealthStateInvulnerable>().FromNew().AsSingle().Lazy();
     }
 }

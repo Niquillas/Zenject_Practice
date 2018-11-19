@@ -7,10 +7,10 @@ public class ControllerHealthSystem : ITickable {
 
 	public float CurrentHealth { get; private set; }
 
-    public ModelHealthState CurrentState { get; private set; }
+    public ObjectHealthState CurrentState { get; private set; }
 
     [Inject]
-    public void Initialize (ModelHealthStateNormal inputStartingState)
+    public void Initialize (ObjectHealthStateNormal inputStartingState)
     {
         // test
         CurrentHealth -= Random.Range(0, 500);
@@ -24,7 +24,7 @@ public class ControllerHealthSystem : ITickable {
         CurrentState.Tick();
     }
 
-    public void TransitionCurrentState (ModelHealthState inputNextState)
+    public void TransitionCurrentState (ObjectHealthState inputNextState)
     {
         if (CurrentState == null || CurrentState.ValidateNextState(inputNextState)) {
             if (CurrentState != null)

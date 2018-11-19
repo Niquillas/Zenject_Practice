@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ModelHealthStateInvulnerable : ModelHealthState
+public class ObjectHealthStateInvulnerable : ObjectHealthState
 {
     [Inject]
-    private ModelHealthStateNormal _normalHealthState;
+    private ObjectHealthStateNormal _normalHealthState;
 
     public override void Setup ()
     {

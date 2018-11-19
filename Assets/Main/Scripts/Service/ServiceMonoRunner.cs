@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class ServiceMonoRunner : MonoBehaviour 
 {
-    public delegate void TickDelegate();
-    public event TickDelegate TickEvent;
-
-    public delegate void StartDelegate();
-    public event TickDelegate StartEvent;
-
-    private void Start () 
+    public Coroutine BeginCoroutine(IEnumerator inputRoutine)
     {
-        if (StartEvent != null)
-        {
-            StartEvent();
-        }
-	}
-	
-	private void Update () 
+        return StartCoroutine(inputRoutine);
+    }
+
+    public void EndCoroutine(IEnumerator inputRoutine)
     {
-        if (TickEvent != null)
-        {
-            TickEvent();
-        }
+        StopCoroutine(inputRoutine);
     }
 }

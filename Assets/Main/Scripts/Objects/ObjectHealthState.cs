@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public abstract class ModelHealthState {
+public abstract class ObjectHealthState {
 
-    private HashSet<ModelHealthState> _transitionableStates;
+    private HashSet<ObjectHealthState> _transitionableStates;
 
-    public ModelHealthState ()
+    public ObjectHealthState ()
     {
-        _transitionableStates = new HashSet<ModelHealthState>();
+        _transitionableStates = new HashSet<ObjectHealthState>();
     }
 
     [Inject]
@@ -19,18 +19,18 @@ public abstract class ModelHealthState {
         Cleanup();
     }
 
-    protected void AddTransitionableState (ModelHealthState inputTransitionableState)
+    protected void AddTransitionableState (ObjectHealthState inputTransitionableState)
     {
         if (!_transitionableStates.Contains(inputTransitionableState))
             _transitionableStates.Add(inputTransitionableState);
     }
 
-    protected bool IsStateTransitionable (ModelHealthState inputActivityState)
+    protected bool IsStateTransitionable (ObjectHealthState inputActivityState)
     {
         return _transitionableStates.Contains(inputActivityState);
     }
 
-    public virtual bool ValidateNextState (ModelHealthState inputNextState)
+    public virtual bool ValidateNextState (ObjectHealthState inputNextState)
     {
         return IsStateTransitionable(inputNextState);
     }

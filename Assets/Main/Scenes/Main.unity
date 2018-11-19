@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debugLogsEnabled: 1
   _monoRunner: {fileID: 1183914190}
+  _panelMain: {fileID: 154768999}
 --- !u!1 &154768997
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 154768997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33c6816a9dfc24e9eb65df2b958959b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 688130a3ea73e454caa520af3af53f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _detectingButton: {fileID: 1786222084}
