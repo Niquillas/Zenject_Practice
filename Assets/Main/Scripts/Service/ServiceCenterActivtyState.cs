@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ServiceCenterActivty : ITickable
+public class ServiceCenterActivtyState : ITickable
 {
     public ObjectActivityState CurrentState { get; private set; }
 
     private CollectionActivityState _collectionActivityState;
 
-    public ServiceCenterActivty(CollectionActivityState inputActivityStateCollection)
+    public ServiceCenterActivtyState(CollectionActivityState inputActivityStateCollection)
     {
         _collectionActivityState = inputActivityStateCollection;
     }

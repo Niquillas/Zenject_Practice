@@ -9,6 +9,8 @@ public class ViewUIPanelMain : MonoBehaviour
     [SerializeField] private Button _detectingButton;
     [SerializeField] private Button _limboButton;
     [SerializeField] private Button _scanningButton;
+    [SerializeField] private Button _createHedgoHoggoButton;
+    [SerializeField] private Button _disposeAllHedgoHoggosButton;
 
     public Button DetectingButton
     {
@@ -31,6 +33,22 @@ public class ViewUIPanelMain : MonoBehaviour
         get
         {
             return _scanningButton;
+        }
+    }
+
+    public Button CreateHedgoHoggoButton
+    {
+        get
+        {
+            return _createHedgoHoggoButton;
+        }
+    }
+
+    public Button DisposeAllHedgoHoggosButton
+    {
+        get
+        {
+            return _disposeAllHedgoHoggosButton;
         }
     }
 }

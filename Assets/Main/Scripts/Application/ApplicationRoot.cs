@@ -5,7 +5,7 @@ using Zenject;
 
 public class ApplicationRoot : IInitializable
 {
-    [Inject] private ServiceCenterActivty _activityCenter;
+    [Inject] private ServiceCenterActivtyState _activityCenter;
 
     public void Initialize()
     {
