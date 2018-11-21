@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debugLogsEnabled: 1
   _monoRunner: {fileID: 1183914190}
-  _hedgoHoggoPrefab: {fileID: 114497847492246298, guid: 61fd68f4b4664467a9f66319174a853f,
+  _hedgoHoggoViewPrefab: {fileID: 114325701374913756, guid: 61fd68f4b4664467a9f66319174a853f,
     type: 2}
   _panelMain: {fileID: 154768999}
 --- !u!1 &154768997
@@ -1617,7 +1617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115208480}
   m_Layer: 0
-  m_Name: Application
+  m_Name: Mechanics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

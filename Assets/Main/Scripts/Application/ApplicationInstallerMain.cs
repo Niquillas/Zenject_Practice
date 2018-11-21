@@ -7,7 +7,7 @@ public class ApplicationInstallerMain : MonoInstaller
 {
     [SerializeField] private bool _debugLogsEnabled;
     [SerializeField] private ServiceMonoRunner _monoRunner;
-    [SerializeField] private ObjectHedgoHoggo _hedgoHoggoPrefab;
+    [SerializeField] private ViewHedgoHoggo _hedgoHoggoViewPrefab;
     [SerializeField] private ViewUIPanelMain _panelMain;
     
     public override void InstallBindings()
@@ -17,6 +17,8 @@ public class ApplicationInstallerMain : MonoInstaller
 
         // View Layer
         Container.BindInterfacesAndSelfTo<ViewUIPanelMain>().FromInstance(_panelMain).AsSingle().Lazy();
+        Container.BindFactory<ViewHedgoHoggo, ViewHedgoHoggo.Factory>().FromMonoPoolableMemoryPool<ViewHedgoHoggo>(
+            x => x.FromComponentInNewPrefab(_hedgoHoggoViewPrefab).UnderTransformGroup("HedgoHoggoViews"));
 
         // Controller Layer
         Container.BindInterfacesAndSelfTo<ControllerUIPanelMain>().FromNew().AsSingle().Lazy();
@@ -35,7 +37,6 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<ObjectActivityStateLimbo>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateScanning>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateDetecting>().FromNew().AsSingle().Lazy();
-        Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>().FromMonoPoolableMemoryPool<ObjectHedgoHoggo>(
-            x => x.WithInitialSize(10).FromComponentInNewPrefab(_hedgoHoggoPrefab).UnderTransformGroup("HedgoHoggos"));
+        Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
     }
 }
