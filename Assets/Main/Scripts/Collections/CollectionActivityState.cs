@@ -7,9 +7,9 @@ public class CollectionActivityState
 {
     public enum ActivityStateId
     {
-        Scanning,
-        Limbo,
-        Detecting
+        Creating,
+        Coloring,
+        Deleting
     }
 
     public List<ObjectActivityState> AllActivityStates { get; private set; }
@@ -18,21 +18,17 @@ public class CollectionActivityState
 
     public CollectionActivityState 
     (
-        ObjectActivityStateLimbo inputLimboState,
-        ObjectActivityStateScanning inputScanningState,
-        ObjectActivityStateDetecting inputDetectingState
+        ObjectActivityStateColoring inputColoringState,
+        ObjectActivityStateCreating inputCreatingState,
+        ObjectActivityStateDeleting inputDeletingState
     )
     {
         _activityStateMap = new Dictionary<ActivityStateId, ObjectActivityState>
         {
-            { ActivityStateId.Scanning, inputScanningState },
-            { ActivityStateId.Limbo, inputLimboState },
-            { ActivityStateId.Detecting, inputDetectingState }
+            { ActivityStateId.Creating, inputCreatingState },
+            { ActivityStateId.Coloring, inputColoringState },
+            { ActivityStateId.Deleting, inputDeletingState }
         };
-
-        inputScanningState.AddTransitionableState(inputLimboState);
-        inputLimboState.AddTransitionableState(inputDetectingState);
-        inputDetectingState.AddTransitionableState(inputScanningState);
 
         AllActivityStates = _activityStateMap.Values.ToList<ObjectActivityState>();
     }

@@ -34,9 +34,9 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<CollectionHedgoHoggo>().FromNew().AsSingle().Lazy();
 
         // Model Object Layer
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateLimbo>().FromNew().AsSingle().Lazy();
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateScanning>().FromNew().AsSingle().Lazy();
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateDetecting>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateCreating>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().Lazy();
         Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
     }
 }

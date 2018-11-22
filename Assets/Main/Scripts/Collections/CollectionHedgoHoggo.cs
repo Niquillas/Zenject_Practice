@@ -14,7 +14,7 @@ public class CollectionHedgoHoggo
         _hedgoHoggoFactory = inputHedgoHoggoFactory;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo(string inputCatchPhrase)
+    public ObjectHedgoHoggo CreateHedgoHoggo()
     {
         ObjectHedgoHoggo hedgoHoggoInstance = _hedgoHoggoFactory.Create();
         AllHedgoHoggos.Add(hedgoHoggoInstance);

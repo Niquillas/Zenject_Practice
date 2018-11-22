@@ -28,7 +28,7 @@ public abstract class ObjectActivityState
 
     protected bool IsStateTransitionable (ObjectActivityState inputActivityState)
     {
-        return _transitionableStates.Contains(inputActivityState);
+        return inputActivityState != this && (_transitionableStates.Count == 0 || _transitionableStates.Contains(inputActivityState));
     }
 
     public virtual bool ValidateNextState (ObjectActivityState inputNextState)

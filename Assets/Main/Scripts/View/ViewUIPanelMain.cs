@@ -1,55 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
+using UnityEngine.Events;
 
 public class ViewUIPanelMain : MonoBehaviour
 {
-    [SerializeField] private Button _detectingButton;
-    [SerializeField] private Button _limboButton;
-    [SerializeField] private Button _scanningButton;
-    [SerializeField] private Button _createHedgoHoggoButton;
-    [SerializeField] private Button _disposeAllHedgoHoggosButton;
+    [SerializeField] private Text _currentActivityStateText;
+    [SerializeField] private Button _creatingButton;
+    [SerializeField] private Button _coloringButton;
+    [SerializeField] private Button _deletingButton;
 
-    public Button DetectingButton
+    public void SetCreatingButtonOnClick(UnityAction inputCallback)
     {
-        get
-        {
-            return _detectingButton;
-        }
+        _creatingButton.onClick.AddListener(inputCallback);
     }
 
-    public Button LimboButton
+    public void SetColoringButtonOnClick(UnityAction inputCallback)
     {
-        get
-        {
-            return _limboButton;
-        }
+        _coloringButton.onClick.AddListener(inputCallback);
     }
 
-    public Button ScanningButton
+    public void SetDeletingButtonOnClick(UnityAction inputCallback)
     {
-        get
-        {
-            return _scanningButton;
-        }
+        _deletingButton.onClick.AddListener(inputCallback);
     }
 
-    public Button CreateHedgoHoggoButton
+    public void SetCurrentActivityStateText (string inputText)
     {
-        get
-        {
-            return _createHedgoHoggoButton;
-        }
-    }
-
-    public Button DisposeAllHedgoHoggosButton
-    {
-        get
-        {
-            return _disposeAllHedgoHoggosButton;
-        }
+        _currentActivityStateText.text = inputText;
     }
 }
 

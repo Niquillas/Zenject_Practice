@@ -8,8 +8,6 @@ public class ObjectHedgoHoggo : IDisposable
 {
     public class Factory : PlaceholderFactory<ObjectHedgoHoggo> {}
 
-    public string CatchPhrase { get; private set; }
-
     private ViewHedgoHoggo.Factory _viewFactory;
     private ViewHedgoHoggo _view;
 

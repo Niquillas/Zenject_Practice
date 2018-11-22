@@ -14,9 +14,9 @@ public class ServiceCenterHedgoHoggo
         _hedgoHoggoCollection = inputHedgoHoggoCollection;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo (string inputCatchPhrase)
+    public ObjectHedgoHoggo CreateHedgoHoggo ()
     {
-        return _hedgoHoggoCollection.CreateHedgoHoggo(inputCatchPhrase);
+        return _hedgoHoggoCollection.CreateHedgoHoggo();
     }
 
     public void DisposeAllHedgoHoggos ()
