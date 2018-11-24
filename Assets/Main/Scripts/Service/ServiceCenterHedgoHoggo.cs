@@ -14,16 +14,8 @@ public class ServiceCenterHedgoHoggo
         _hedgoHoggoCollection = inputHedgoHoggoCollection;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo ()
+    public ObjectHedgoHoggo CreateHedgoHoggo (Vector3 inputStartPosition)
     {
-        return _hedgoHoggoCollection.CreateHedgoHoggo();
-    }
-
-    public void DisposeAllHedgoHoggos ()
-    {
-        while (_hedgoHoggoCollection.AllHedgoHoggos.Count > 0)
-        {
-            _hedgoHoggoCollection.DisposeHedgoHoggo(_hedgoHoggoCollection.AllHedgoHoggos[0]);
-        }
+        return _hedgoHoggoCollection.CreateHedgoHoggo(inputStartPosition);
     }
 }

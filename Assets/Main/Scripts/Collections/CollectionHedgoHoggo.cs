@@ -4,28 +4,44 @@ using UnityEngine;
 
 public class CollectionHedgoHoggo 
 {
-    public List<ObjectHedgoHoggo> AllHedgoHoggos { get; private set; }
-    
-    private readonly ObjectHedgoHoggo.Factory _hedgoHoggoFactory;
-    
-    public CollectionHedgoHoggo (ObjectHedgoHoggo.Factory inputHedgoHoggoFactory)
+    public List<ObjectHedgoHoggo> AllHedgoHoggosObjects { get; private set; }
+
+    private Dictionary<ObjectHedgoHoggo, ViewHedgoHoggo> _hedgoHoggoViewsMap;
+
+    private readonly ObjectHedgoHoggo.Factory _hedgoHoggoObjectFactory;
+    private readonly ViewHedgoHoggo.Factory _hedgoHoggoViewFactory;
+
+    public CollectionHedgoHoggo (ObjectHedgoHoggo.Factory inputHedgoHoggoObjectFactory, ViewHedgoHoggo.Factory inputHedgoHoggoViewFactory)
     {
-        AllHedgoHoggos = new List<ObjectHedgoHoggo>();
-        _hedgoHoggoFactory = inputHedgoHoggoFactory;
+        AllHedgoHoggosObjects = new List<ObjectHedgoHoggo>();
+        _hedgoHoggoViewsMap = new Dictionary<ObjectHedgoHoggo, ViewHedgoHoggo>();
+        _hedgoHoggoObjectFactory = inputHedgoHoggoObjectFactory;
+        _hedgoHoggoViewFactory = inputHedgoHoggoViewFactory;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo()
+    public ObjectHedgoHoggo CreateHedgoHoggo(Vector3 inputStartPosition)
     {
-        ObjectHedgoHoggo hedgoHoggoInstance = _hedgoHoggoFactory.Create();
-        AllHedgoHoggos.Add(hedgoHoggoInstance);
-        return hedgoHoggoInstance;
+        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create(inputStartPosition);
+        AllHedgoHoggosObjects.Add(hedgoHoggoObject);
+        ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
+        _hedgoHoggoViewsMap.Add(hedgoHoggoObject, hedgoHoggoView);
+        //TODO : more initialization
+        return hedgoHoggoObject;
     }
 
-    public void DisposeHedgoHoggo(ObjectHedgoHoggo inputHedgoHoggo)
+    public void DisposeHedgoHoggo(ObjectHedgoHoggo inputHedgoHoggoObject)
     {
-        if (AllHedgoHoggos.Remove(inputHedgoHoggo))
+        int hedgoHoggoObjectIndex = AllHedgoHoggosObjects.IndexOf(inputHedgoHoggoObject);
+
+        if (hedgoHoggoObjectIndex >= 0)
         {
-            inputHedgoHoggo.Dispose();
+            ObjectHedgoHoggo hedgoHoggoObject = AllHedgoHoggosObjects[hedgoHoggoObjectIndex];
+
+            if (_hedgoHoggoViewsMap.ContainsKey(hedgoHoggoObject))
+            {
+                _hedgoHoggoViewsMap[hedgoHoggoObject].Dispose();
+                _hedgoHoggoViewsMap.Remove(hedgoHoggoObject);
+            }
         }
     }
 }

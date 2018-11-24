@@ -17,7 +17,7 @@ public class ApplicationInstallerMain : MonoInstaller
 
         // View Layer
         Container.BindInterfacesAndSelfTo<ViewUIPanelMain>().FromInstance(_panelMain).AsSingle().Lazy();
-        Container.BindFactory<ViewHedgoHoggo, ViewHedgoHoggo.Factory>().FromMonoPoolableMemoryPool<ViewHedgoHoggo>(
+        Container.BindFactory<ObjectHedgoHoggo, ViewHedgoHoggo, ViewHedgoHoggo.Factory>().FromMonoPoolableMemoryPool<ObjectHedgoHoggo, ViewHedgoHoggo>(
             x => x.FromComponentInNewPrefab(_hedgoHoggoViewPrefab).UnderTransformGroup("HedgoHoggoViews"));
 
         // Controller Layer
@@ -37,6 +37,6 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateCreating>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().Lazy();
-        Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
+        Container.BindFactory<Vector3, ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
     }
 }

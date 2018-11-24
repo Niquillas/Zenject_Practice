@@ -4,22 +4,25 @@ using UnityEngine;
 using Zenject;
 using System;
 
-public class ViewHedgoHoggo : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
+public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemoryPool>, IDisposable
 {
-    public class Factory : PlaceholderFactory<ViewHedgoHoggo> {}
+    public class Factory : PlaceholderFactory<ObjectHedgoHoggo, ViewHedgoHoggo> {}
 
     [SerializeField] private Transform _selfTransform;
     [SerializeField] private Renderer _cubeRenderer;
 
+    private ObjectHedgoHoggo _hedgoHoggoObject;
     private IMemoryPool _pool;
 
     public void OnDespawned()
     {
+        _hedgoHoggoObject = null;
         _pool = null;
     }
 
-    public void OnSpawned(IMemoryPool inputPool)
+    public void OnSpawned(ObjectHedgoHoggo inputHedgoHoggoObject, IMemoryPool inputPool)
     {
+        _hedgoHoggoObject = inputHedgoHoggoObject;
         _pool = inputPool;
     }
 

@@ -4,23 +4,24 @@ using UnityEngine;
 using Zenject;
 using System;
 
-public class ObjectHedgoHoggo : IDisposable
+public class ObjectHedgoHoggo
 {
-    public class Factory : PlaceholderFactory<ObjectHedgoHoggo> {}
+    public class Factory : PlaceholderFactory<Vector3, ObjectHedgoHoggo> {}
 
-    private ViewHedgoHoggo.Factory _viewFactory;
-    private ViewHedgoHoggo _view;
+    public Color CurrentColor { get; private set; }
+    public Vector3 CurrentPosition { get; private set; }
 
-    public ObjectHedgoHoggo (ViewHedgoHoggo.Factory inputHedgoHoggoViewFactory)
+    public ObjectHedgoHoggo (Vector3 inputStartPosition)
     {
-        _viewFactory = inputHedgoHoggoViewFactory;
-        _view = _viewFactory.Create();
+        CurrentPosition = inputStartPosition;
+        CurrentColor = Color.white;
     }
 
-    public void Dispose()
+    public void UpdateCurrentColor (Color inputColor)
     {
-        _view.Dispose();
-        _view = null;
-        _viewFactory = null;
+        if (inputColor == null)
+        {
+            inputColor = new Color();
+        }
     }
 }
