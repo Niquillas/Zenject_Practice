@@ -157,6 +157,7 @@ MonoBehaviour:
   _monoRunner: {fileID: 1183914190}
   _hedgoHoggoViewPrefab: {fileID: 114325701374913756, guid: 61fd68f4b4664467a9f66319174a853f,
     type: 2}
+  _mainCamera: {fileID: 1953602391}
   _panelMain: {fileID: 94075509}
 --- !u!1 &94075507
 GameObject:
@@ -977,7 +978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83cacdc670064cdea11bd15c93bb1b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCameraTransform: {fileID: 1953602392}
 --- !u!1001 &1245596357
 Prefab:
   m_ObjectHideFlags: 0

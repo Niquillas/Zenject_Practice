@@ -6,6 +6,7 @@ using Zenject;
 public class ObjectActivityStateCreating : ObjectActivityState
 {
     [Inject] private ViewUIPanelMain _mainPanelView;
+    [Inject] private ServiceInput _inputService;
 
     public override void Cleanup()
     {

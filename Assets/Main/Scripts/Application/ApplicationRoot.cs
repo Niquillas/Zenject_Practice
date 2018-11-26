@@ -5,15 +5,15 @@ using Zenject;
 
 public class ApplicationRoot : IInitializable
 {
-    private ServiceCenterActivtyState _activityCenter;
+    private ServiceCenterActivtyState _activityStateCenter;
 
     public ApplicationRoot(ServiceCenterActivtyState inputActivityState)
     {
-        _activityCenter = inputActivityState;
+        _activityStateCenter = inputActivityState;
     }
 
     public void Initialize()
     {
-        _activityCenter.Init(CollectionActivityState.ActivityStateId.Creating);
+        _activityStateCenter.Init(CollectionActivityState.ActivityStateId.Creating);
     }
 }

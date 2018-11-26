@@ -8,6 +8,7 @@ public class ApplicationInstallerMain : MonoInstaller
     [SerializeField] private bool _debugLogsEnabled;
     [SerializeField] private ServiceMonoRunner _monoRunner;
     [SerializeField] private ViewHedgoHoggo _hedgoHoggoViewPrefab;
+    [SerializeField] private Camera _mainCamera;
     [SerializeField] private ViewUIPanelMain _panelMain;
     
     public override void InstallBindings()
@@ -26,7 +27,7 @@ public class ApplicationInstallerMain : MonoInstaller
         // Model Service Layer
         Container.BindInterfacesAndSelfTo<ServiceCenterHedgoHoggo>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceCenterActivtyState>().FromNew().AsSingle().Lazy();
-        Container.BindInterfacesAndSelfTo<ServiceInput>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ServiceInput>().FromNew().AsSingle().WithArguments(_mainCamera).Lazy();
         Container.BindInterfacesAndSelfTo<ServiceLogger>().FromNew().AsSingle().WithArguments(_debugLogsEnabled).Lazy();
         Container.BindInterfacesAndSelfTo<ServiceMonoRunner>().FromInstance(_monoRunner).AsSingle().Lazy();
 
