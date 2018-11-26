@@ -46,24 +46,21 @@ public class ControllerCameraPanner : MonoBehaviour
             xSpeed = mousePanSpeed;
             ySpeed = mousePanSpeed;
         }
-	}
 
-    public void Init()
-	{
         m_cameraTrans.position = new Vector3(m_cameraTrans.position.x, 1, m_cameraTrans.position.z);
         distance = startingDistance;
-		currentDistance = Vector3.Distance(m_cameraTrans.position, m_focusTrans.position);
-		desiredDistance = distance;
+        currentDistance = Vector3.Distance(m_cameraTrans.position, m_focusTrans.position);
+        desiredDistance = distance;
         m_cameraTrans.LookAt(m_focusTrans);
-		position = m_cameraTrans.position;
-		rotation = m_cameraTrans.rotation;
-		currentRotation = m_cameraTrans.rotation;
-		desiredRotation = m_cameraTrans.rotation;
-		xDeg = 0;
+        position = m_cameraTrans.position;
+        rotation = m_cameraTrans.rotation;
+        currentRotation = m_cameraTrans.rotation;
+        desiredRotation = m_cameraTrans.rotation;
+        xDeg = 0;
         yDeg = yStartAngle;
 
-        if (m_cameraTrans.position.y < m_focusTrans.position.y) 
-			yDeg *= -1;
+        if (m_cameraTrans.position.y < m_focusTrans.position.y)
+            yDeg *= -1;
 
         targetPos = m_focusTrans.position;
     }

@@ -19,13 +19,12 @@ public class CollectionHedgoHoggo
         _hedgoHoggoViewFactory = inputHedgoHoggoViewFactory;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo(Vector3 inputStartPosition)
+    public ObjectHedgoHoggo CreateHedgoHoggo()
     {
-        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create(inputStartPosition);
+        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create();
         AllHedgoHoggosObjects.Add(hedgoHoggoObject);
         ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
         _hedgoHoggoViewsMap.Add(hedgoHoggoObject, hedgoHoggoView);
-        //TODO : more initialization
         return hedgoHoggoObject;
     }
 

@@ -6,22 +6,35 @@ using System;
 
 public class ObjectHedgoHoggo
 {
-    public class Factory : PlaceholderFactory<Vector3, ObjectHedgoHoggo> {}
+    public class Factory : PlaceholderFactory<ObjectHedgoHoggo> {}
+
+    public delegate void PropertiesUpdatedDelegate();
+    public event PropertiesUpdatedDelegate PropertiesUpdatesEvent;
 
     public Color CurrentColor { get; private set; }
     public Vector3 CurrentPosition { get; private set; }
-
-    public ObjectHedgoHoggo (Vector3 inputStartPosition)
+    
+    public ObjectHedgoHoggo ()
     {
-        CurrentPosition = inputStartPosition;
+        CurrentPosition = Vector3.zero;
         CurrentColor = Color.white;
     }
 
-    public void UpdateCurrentColor (Color inputColor)
+    public void UpdateCurrentColor(Color inputColor)
     {
-        if (inputColor == null)
+        CurrentColor = inputColor;
+        if(PropertiesUpdatesEvent != null)
         {
-            inputColor = new Color();
+            PropertiesUpdatesEvent();
+        }
+    }
+
+    public void UpdateCurrentPosition(Vector3 inputPosition)
+    {
+        CurrentPosition = inputPosition;
+        if (PropertiesUpdatesEvent != null)
+        {
+            PropertiesUpdatesEvent();
         }
     }
 }

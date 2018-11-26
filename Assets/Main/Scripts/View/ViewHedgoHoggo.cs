@@ -16,6 +16,7 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
 
     public void OnDespawned()
     {
+        _hedgoHoggoObject.PropertiesUpdatesEvent -= OnPropertiesUpdated;
         _hedgoHoggoObject = null;
         _pool = null;
     }
@@ -23,6 +24,7 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
     public void OnSpawned(ObjectHedgoHoggo inputHedgoHoggoObject, IMemoryPool inputPool)
     {
         _hedgoHoggoObject = inputHedgoHoggoObject;
+        _hedgoHoggoObject.PropertiesUpdatesEvent += OnPropertiesUpdated;
         _pool = inputPool;
     }
 
@@ -43,5 +45,11 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
         {
             mats[i].color = inputColor;
         }
+    }
+
+    public void OnPropertiesUpdated()
+    {
+        SetPosition(_hedgoHoggoObject.CurrentPosition);
+        SetColor(_hedgoHoggoObject.CurrentColor);
     }
 }
