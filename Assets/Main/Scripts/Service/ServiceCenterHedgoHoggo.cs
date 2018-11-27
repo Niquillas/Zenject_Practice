@@ -5,8 +5,6 @@ using Zenject;
 
 public class ServiceCenterHedgoHoggo
 {
-    [Inject] private ServiceLogger _logger;
-
     private CollectionHedgoHoggo _hedgoHoggoCollection;
 
     public ServiceCenterHedgoHoggo (CollectionHedgoHoggo inputHedgoHoggoCollection)
@@ -17,5 +15,15 @@ public class ServiceCenterHedgoHoggo
     public ObjectHedgoHoggo CreateHedgoHoggo ()
     {
         return _hedgoHoggoCollection.CreateHedgoHoggo();
+    }
+
+    public ObjectHedgoHoggo FetchHedgoHoggo (ViewHedgoHoggo inputHedgoHoggoView)
+    {
+        return _hedgoHoggoCollection.FetchHedgoHoggo(inputHedgoHoggoView.Id);
+    }
+
+    public void DestroyHedgoHoggo (ViewHedgoHoggo inputHedgoHoggoView)
+    {
+        _hedgoHoggoCollection.DestroyHedgoHoggo(inputHedgoHoggoView.Id);
     }
 }

@@ -25,7 +25,7 @@ public class ServiceInput : ITickable
 
     public void Tick()
     {
-        if (AllowTouchRaycasts && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        if (AllowTouchRaycasts)
         {
             if(Input.GetMouseButton(0))
             {
@@ -33,7 +33,7 @@ public class ServiceInput : ITickable
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                if (_mouseDownTimer < MAX_CLICK_DURATION)
+                if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && _mouseDownTimer < MAX_CLICK_DURATION)
                 {
                     if (MouseClickedEvent != null)
                     {
@@ -45,12 +45,12 @@ public class ServiceInput : ITickable
         }
     }
 
-    public RaycastHit RaycastFromTouchPoint(Vector3 inputMousePoint, LayerMask inputLayerMask)
+    public RaycastHit RaycastFromMousePosition(Vector3 inputMousePoint)
     {
         Transform mainCameraTransform = _mainCamera.transform;
         Ray cameraRay = _mainCamera.ScreenPointToRay(inputMousePoint);
         RaycastHit hitInfo;
-        Physics.Raycast(cameraRay.origin, cameraRay.direction, out hitInfo, RAYCAST_DISTANCE, inputLayerMask);
+        Physics.Raycast(cameraRay.origin, cameraRay.direction, out hitInfo, RAYCAST_DISTANCE);
         return hitInfo;
     }
 }

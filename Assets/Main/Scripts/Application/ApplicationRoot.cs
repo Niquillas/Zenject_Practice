@@ -7,9 +7,9 @@ public class ApplicationRoot : IInitializable
 {
     private ServiceCenterActivtyState _activityStateCenter;
 
-    public ApplicationRoot(ServiceCenterActivtyState inputActivityState)
+    public ApplicationRoot(ServiceCenterActivtyState inputActivityStateCenter)
     {
-        _activityStateCenter = inputActivityState;
+        _activityStateCenter = inputActivityStateCenter;
     }
 
     public void Initialize()

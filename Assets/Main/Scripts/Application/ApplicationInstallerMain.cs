@@ -10,7 +10,8 @@ public class ApplicationInstallerMain : MonoInstaller
     [SerializeField] private ViewHedgoHoggo _hedgoHoggoViewPrefab;
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private ViewUIPanelMain _panelMain;
-    
+    [SerializeField] private LayerMask _viewCollisionLayerMask;
+
     public override void InstallBindings()
     {
         // Application Layer
@@ -28,6 +29,7 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<ServiceCenterHedgoHoggo>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceCenterActivtyState>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceInput>().FromNew().AsSingle().WithArguments(_mainCamera).Lazy();
+        Container.BindInterfacesAndSelfTo<ServiceUtility>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceLogger>().FromNew().AsSingle().WithArguments(_debugLogsEnabled).Lazy();
         Container.BindInterfacesAndSelfTo<ServiceMonoRunner>().FromInstance(_monoRunner).AsSingle().Lazy();
 
@@ -36,9 +38,9 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<CollectionHedgoHoggo>().FromNew().AsSingle().Lazy();
 
         // Model Object Layer
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().Lazy();
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateCreating>().FromNew().AsSingle().Lazy();
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().Lazy();
-        Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateCreating>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
+        Container.BindFactory<int, ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
     }
 }

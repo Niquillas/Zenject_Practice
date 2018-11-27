@@ -8,6 +8,14 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
 {
     public class Factory : PlaceholderFactory<ObjectHedgoHoggo, ViewHedgoHoggo> {}
 
+    public int Id 
+    {
+        get
+        {
+            return _hedgoHoggoObject.Id;
+        }
+    }
+
     [SerializeField] private Transform _selfTransform;
     [SerializeField] private Renderer _cubeRenderer;
 

@@ -6,9 +6,7 @@ using Zenject;
 public abstract class ObjectActivityState
 {
     private HashSet<ObjectActivityState> _transitionableStates;
-
-    [Inject] protected ServiceLogger _serviceLogger;
-
+    
     public ObjectActivityState()
     {
         _transitionableStates = new HashSet<ObjectActivityState>();

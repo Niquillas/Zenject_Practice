@@ -4,43 +4,63 @@ using UnityEngine;
 
 public class CollectionHedgoHoggo 
 {
-    public List<ObjectHedgoHoggo> AllHedgoHoggosObjects { get; private set; }
-
-    private Dictionary<ObjectHedgoHoggo, ViewHedgoHoggo> _hedgoHoggoViewsMap;
+    private Dictionary<int, ObjectHedgoHoggo> _hedgoHoggoObjectsMap;
+    private Dictionary<int, ViewHedgoHoggo> _hedgoHoggoViewsMap;
 
     private readonly ObjectHedgoHoggo.Factory _hedgoHoggoObjectFactory;
     private readonly ViewHedgoHoggo.Factory _hedgoHoggoViewFactory;
 
+    private Stack<int> _reusableIds;
+    private int _lastCreatedId;
+
     public CollectionHedgoHoggo (ObjectHedgoHoggo.Factory inputHedgoHoggoObjectFactory, ViewHedgoHoggo.Factory inputHedgoHoggoViewFactory)
     {
-        AllHedgoHoggosObjects = new List<ObjectHedgoHoggo>();
-        _hedgoHoggoViewsMap = new Dictionary<ObjectHedgoHoggo, ViewHedgoHoggo>();
+        _hedgoHoggoObjectsMap = new Dictionary<int, ObjectHedgoHoggo>();
+        _hedgoHoggoViewsMap = new Dictionary<int, ViewHedgoHoggo>();
         _hedgoHoggoObjectFactory = inputHedgoHoggoObjectFactory;
         _hedgoHoggoViewFactory = inputHedgoHoggoViewFactory;
+        _lastCreatedId = -1;
+        _reusableIds = new Stack<int>();
     }
 
     public ObjectHedgoHoggo CreateHedgoHoggo()
     {
-        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create();
-        AllHedgoHoggosObjects.Add(hedgoHoggoObject);
+        int id = DetermineNextAvailableId();
+        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create(id);
+        _hedgoHoggoObjectsMap.Add(id, hedgoHoggoObject);
         ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
-        _hedgoHoggoViewsMap.Add(hedgoHoggoObject, hedgoHoggoView);
+        _hedgoHoggoViewsMap.Add(id, hedgoHoggoView);
         return hedgoHoggoObject;
     }
 
-    public void DisposeHedgoHoggo(ObjectHedgoHoggo inputHedgoHoggoObject)
+    public void DestroyHedgoHoggo(int inputId)
     {
-        int hedgoHoggoObjectIndex = AllHedgoHoggosObjects.IndexOf(inputHedgoHoggoObject);
-
-        if (hedgoHoggoObjectIndex >= 0)
+        if (_hedgoHoggoObjectsMap.Remove(inputId))
         {
-            ObjectHedgoHoggo hedgoHoggoObject = AllHedgoHoggosObjects[hedgoHoggoObjectIndex];
+            _hedgoHoggoViewsMap[inputId].Dispose();
+            _hedgoHoggoViewsMap.Remove(inputId);
+            _reusableIds.Push(inputId);
+        }
+    }
 
-            if (_hedgoHoggoViewsMap.ContainsKey(hedgoHoggoObject))
-            {
-                _hedgoHoggoViewsMap[hedgoHoggoObject].Dispose();
-                _hedgoHoggoViewsMap.Remove(hedgoHoggoObject);
-            }
+    public ObjectHedgoHoggo FetchHedgoHoggo(int inputId)
+    {
+        if (_hedgoHoggoObjectsMap.ContainsKey(inputId))
+        {
+            return _hedgoHoggoObjectsMap[inputId];
+        }
+        return null;
+    }
+
+    private int DetermineNextAvailableId()
+    {
+        if (_reusableIds.Count == 0)
+        {
+            return ++_lastCreatedId;
+        }
+        else
+        {
+            return _reusableIds.Pop();
         }
     }
 }
