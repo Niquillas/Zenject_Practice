@@ -62,8 +62,12 @@ public class ObjectActivityStateSelecting : ObjectActivityState
                             _selectedCenter.DeSelectHedgoHoggo(hedgoHoggoView);
                         }
                         else
-                        {
-                            _selectedCenter.SelectHedgoHoggo(hedgoHoggoView);
+                        { 
+                            ObjectPointer pointerObject = _selectedCenter.SelectHedgoHoggo(hedgoHoggoView);
+                            Vector3 spawnPosition = hedgoHoggoView.SelfTransform.position;
+                            spawnPosition.y += 5;
+                            pointerObject.UpdatePosition(spawnPosition);
+                            _selectedCenter.SynchronizeHedgoHoggoPointers();
                         }
                     }
                 }

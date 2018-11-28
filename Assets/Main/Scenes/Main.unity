@@ -232,6 +232,8 @@ MonoBehaviour:
   _monoRunner: {fileID: 1183914190}
   _hedgoHoggoViewPrefab: {fileID: 114325701374913756, guid: 61fd68f4b4664467a9f66319174a853f,
     type: 2}
+  _pointerViewPrefab: {fileID: 114789294670669342, guid: 9ed7391fa5ffd4bd5bd57e45c9926132,
+    type: 2}
   _mainCamera: {fileID: 1953602391}
   _panelMain: {fileID: 94075509}
   _viewCollisionLayerMask:

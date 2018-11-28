@@ -8,6 +8,14 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
 {
     public class Factory : PlaceholderFactory<ObjectHedgoHoggo, ViewHedgoHoggo> {}
 
+    public Transform SelfTransform
+    { 
+        get
+        {
+            return _selfTransform;
+        }
+    }
+
     public int Id 
     {
         get
