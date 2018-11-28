@@ -18,4 +18,12 @@ public class ServiceLogger
             Debug.Log(inputString);
         }
     }
+
+    public void LogError (string inputString)
+    {
+        if (_debugLogsEnabled)
+        {
+            Debug.LogError(inputString);
+        }
+    }
 }

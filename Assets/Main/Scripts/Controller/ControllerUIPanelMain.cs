@@ -16,13 +16,20 @@ public class ControllerUIPanelMain : IInitializable
     public void Initialize()
     {
         _panelMain.SetCreatingButtonOnClick(OnCreatingButtonClicked);
-        _panelMain.SetColoringButtonOnClick(OnColoringButtonClicked);
+        _panelMain.SetSelectingButtonOnClick(OnSelectingButtonClicked);
         _panelMain.SetDeletingButtonOnClick(OnDeletingButtonClicked);
+        _panelMain.SetColoringButtonOnClick(OnColoringButtonClicked);
+
     }
 
     private void OnCreatingButtonClicked()
     {
         _activityStateCenter.TransitionCurrentState(CollectionActivityState.ActivityStateId.Creating);
+    }
+
+    private void OnSelectingButtonClicked()
+    {
+        _activityStateCenter.TransitionCurrentState(CollectionActivityState.ActivityStateId.Selecting);
     }
 
     private void OnColoringButtonClicked()

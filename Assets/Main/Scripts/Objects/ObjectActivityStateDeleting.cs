@@ -50,7 +50,7 @@ public class ObjectActivityStateDeleting : ObjectActivityState
             if(_utilityService.CalculateLayerInLayermask(_viewCollisionMapLayerMask, hit.transform.gameObject.layer))
             {
                 ViewCollisionMap collisionMap = hit.transform.gameObject.GetComponent<ViewCollisionMap>();
-                if(collisionMap.HedgoHoggoView != null)
+                if(collisionMap != null && collisionMap.HedgoHoggoView != null)
                 {
                     _hedgoHoggoCenter.DestroyHedgoHoggo(collisionMap.HedgoHoggoView);
                 }

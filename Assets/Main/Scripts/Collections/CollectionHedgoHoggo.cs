@@ -4,46 +4,59 @@ using UnityEngine;
 
 public class CollectionHedgoHoggo 
 {
+    private ServiceLogger _logger;
     private Dictionary<int, ObjectHedgoHoggo> _hedgoHoggoObjectsMap;
     private Dictionary<int, ViewHedgoHoggo> _hedgoHoggoViewsMap;
-
-    private readonly ObjectHedgoHoggo.Factory _hedgoHoggoObjectFactory;
-    private readonly ViewHedgoHoggo.Factory _hedgoHoggoViewFactory;
-
-    private Stack<int> _reusableIds;
+    private readonly Stack<int> _reusableIds;
     private int _lastCreatedId;
 
-    public CollectionHedgoHoggo (ObjectHedgoHoggo.Factory inputHedgoHoggoObjectFactory, ViewHedgoHoggo.Factory inputHedgoHoggoViewFactory)
+    public CollectionHedgoHoggo (ServiceLogger inputLogger)
     {
+        _logger = inputLogger;
         _hedgoHoggoObjectsMap = new Dictionary<int, ObjectHedgoHoggo>();
         _hedgoHoggoViewsMap = new Dictionary<int, ViewHedgoHoggo>();
-        _hedgoHoggoObjectFactory = inputHedgoHoggoObjectFactory;
-        _hedgoHoggoViewFactory = inputHedgoHoggoViewFactory;
         _lastCreatedId = -1;
         _reusableIds = new Stack<int>();
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo()
+    public void RegisterHedgoHoggo(ObjectHedgoHoggo inputHedgoHoggoObject, ViewHedgoHoggo inputHedgoHoggoView)
     {
-        int id = DetermineNextAvailableId();
-        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create(id);
-        _hedgoHoggoObjectsMap.Add(id, hedgoHoggoObject);
-        ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
-        _hedgoHoggoViewsMap.Add(id, hedgoHoggoView);
-        return hedgoHoggoObject;
-    }
-
-    public void DestroyHedgoHoggo(int inputId)
-    {
-        if (_hedgoHoggoObjectsMap.Remove(inputId))
+        if (!_hedgoHoggoObjectsMap.ContainsKey(inputHedgoHoggoObject.Id))
         {
-            _hedgoHoggoViewsMap[inputId].Dispose();
-            _hedgoHoggoViewsMap.Remove(inputId);
-            _reusableIds.Push(inputId);
+            _hedgoHoggoObjectsMap.Add(inputHedgoHoggoObject.Id, inputHedgoHoggoObject);
+            _logger.Log(string.Format("Registered Hedgo Hoggo Object with ID : {0}.!", inputHedgoHoggoObject.Id));
+        }
+        else
+        {
+            _logger.LogError(string.Format("Cannot register Hedgo Hoggo Object with ID : {0} since it already exists in object dictionary!", inputHedgoHoggoObject.Id));
+        }
+
+        if (!_hedgoHoggoViewsMap.ContainsKey(inputHedgoHoggoView.Id))
+        {
+            _hedgoHoggoViewsMap.Add(inputHedgoHoggoView.Id, inputHedgoHoggoView);
+            _logger.Log(string.Format("Registered Hedgo Hoggo View with ID : {0}.", inputHedgoHoggoView.Id));
+        }
+        else
+        {
+            _logger.LogError(string.Format("Cannot register Hedgo Hoggo View with ID : {0} since it already exists in view dictionary!", inputHedgoHoggoView.Id));
         }
     }
 
-    public ObjectHedgoHoggo FetchHedgoHoggo(int inputId)
+    public void UnRegisterHedgoHoggo(int inputId)
+    {
+        if (_hedgoHoggoObjectsMap.Remove(inputId))
+        {
+            _hedgoHoggoViewsMap.Remove(inputId);
+            _reusableIds.Push(inputId);
+            _logger.Log(string.Format("Unregistered Hedgo Hoggo Object with ID : {0}.", inputId));
+        }
+        else 
+        {
+            _logger.LogError(string.Format("Cannot unregister Hedgo Hoggo Object with ID : {0} since it doesnt exist in object dictionary!", inputId));
+        }
+    }
+
+    public ObjectHedgoHoggo FetchHedgoHoggoObject(int inputId)
     {
         if (_hedgoHoggoObjectsMap.ContainsKey(inputId))
         {
@@ -52,7 +65,16 @@ public class CollectionHedgoHoggo
         return null;
     }
 
-    private int DetermineNextAvailableId()
+    public ViewHedgoHoggo FetchHedgoHoggoView(int inputId)
+    {
+        if (_hedgoHoggoViewsMap.ContainsKey(inputId))
+        {
+            return _hedgoHoggoViewsMap[inputId];
+        }
+        return null;
+    }
+
+    public int DetermineNextAvailableId()
     {
         if (_reusableIds.Count == 0)
         {

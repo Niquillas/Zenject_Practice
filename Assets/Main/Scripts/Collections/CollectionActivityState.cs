@@ -8,6 +8,7 @@ public class CollectionActivityState
     public enum ActivityStateId
     {
         Creating,
+        Selecting,
         Coloring,
         Deleting
     }
@@ -18,14 +19,16 @@ public class CollectionActivityState
 
     public CollectionActivityState 
     (
-        ObjectActivityStateColoring inputColoringState,
         ObjectActivityStateCreating inputCreatingState,
+        ObjectActivityStateSelecting inputSelectingState,
+        ObjectActivityStateColoring inputColoringState,
         ObjectActivityStateDeleting inputDeletingState
     )
     {
         _activityStateMap = new Dictionary<ActivityStateId, ObjectActivityState>
         {
             { ActivityStateId.Creating, inputCreatingState },
+            { ActivityStateId.Selecting, inputSelectingState },
             { ActivityStateId.Coloring, inputColoringState },
             { ActivityStateId.Deleting, inputDeletingState }
         };

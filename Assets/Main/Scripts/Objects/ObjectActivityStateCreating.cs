@@ -50,7 +50,7 @@ public class ObjectActivityStateCreating : ObjectActivityState
             if (_utilityService.CalculateLayerInLayermask(_viewCollisionMapLayerMask, hit.transform.gameObject.layer))
             {
                 ViewCollisionMap collisionMap = hit.transform.gameObject.GetComponent<ViewCollisionMap>();
-                if (collisionMap.FloorTransform != null)
+                if (collisionMap != null && collisionMap.FloorTransform != null)
                 {
                     ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoCenter.CreateHedgoHoggo();
                     hedgoHoggoObject.UpdateCurrentPosition(hit.point);

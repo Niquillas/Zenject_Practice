@@ -28,6 +28,7 @@ public class ApplicationInstallerMain : MonoInstaller
         // Model Service Layer
         Container.BindInterfacesAndSelfTo<ServiceCenterHedgoHoggo>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceCenterActivtyState>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ServiceCenterSelected>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceInput>().FromNew().AsSingle().WithArguments(_mainCamera).Lazy();
         Container.BindInterfacesAndSelfTo<ServiceUtility>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<ServiceLogger>().FromNew().AsSingle().WithArguments(_debugLogsEnabled).Lazy();
@@ -36,10 +37,12 @@ public class ApplicationInstallerMain : MonoInstaller
         // Model Collection Layer
         Container.BindInterfacesAndSelfTo<CollectionActivityState>().FromNew().AsSingle().Lazy();
         Container.BindInterfacesAndSelfTo<CollectionHedgoHoggo>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<CollectionSelected>().FromNew().AsSingle().Lazy();
 
         // Model Object Layer
-        Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateCreating>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateSelecting>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
+        Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
         Container.BindFactory<int, ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
     }
