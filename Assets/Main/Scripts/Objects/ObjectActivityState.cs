@@ -5,8 +5,10 @@ using Zenject;
 
 public abstract class ObjectActivityState
 {
+    public string Name { get; protected set; }
+
     private HashSet<ObjectActivityState> _transitionableStates;
-    
+
     public ObjectActivityState()
     {
         _transitionableStates = new HashSet<ObjectActivityState>();

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class ViewUIPanelMain : MonoBehaviour
+public class ViewUIPanelMain : ViewUIPanel
 {
     [SerializeField] private Text _currentActivityStateText;
     [SerializeField] private Button _creatingButton;

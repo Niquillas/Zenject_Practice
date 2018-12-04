@@ -10,7 +10,8 @@ public class ApplicationInstallerMain : MonoInstaller
     [SerializeField] private ViewHedgoHoggo _hedgoHoggoViewPrefab;
     [SerializeField] private ViewPointer _pointerViewPrefab;
     [SerializeField] private Camera _mainCamera;
-    [SerializeField] private ViewUIPanelMain _panelMain;
+    [SerializeField] private ViewUIPanelMain _mainPanelView;
+    [SerializeField] private ViewUIPanelSelected _selectedPanelView;
     [SerializeField] private LayerMask _viewCollisionLayerMask;
 
     public override void InstallBindings()
@@ -19,14 +20,16 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<ApplicationRoot>().FromNew().AsSingle().Lazy();
 
         // View Layer
-        Container.BindInterfacesAndSelfTo<ViewUIPanelMain>().FromInstance(_panelMain).AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ViewUIPanelMain>().FromInstance(_mainPanelView).AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ViewUIPanelSelected>().FromInstance(_selectedPanelView).AsSingle().Lazy();
         Container.BindFactory<ObjectHedgoHoggo, ViewHedgoHoggo, ViewHedgoHoggo.Factory>().FromMonoPoolableMemoryPool(
             x => x.FromComponentInNewPrefab(_hedgoHoggoViewPrefab).UnderTransformGroup("HedgoHoggoViews"));
         Container.BindFactory<ObjectPointer, ViewPointer, ViewPointer.Factory>().FromMonoPoolableMemoryPool(
             x => x.FromComponentInNewPrefab(_pointerViewPrefab).UnderTransformGroup("Pointers"));
 
         // Controller Layer
-        Container.BindInterfacesAndSelfTo<ControllerUIPanelMain>().FromNew().AsSingle().Lazy();
+        Container.BindInterfacesAndSelfTo<ControllerUIPanelMain>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<ControllerUIPanelSelected>().FromNew().AsSingle().NonLazy();
 
         // Model Service Layer
         Container.BindInterfacesAndSelfTo<ServiceCenterHedgoHoggo>().FromNew().AsSingle().Lazy();

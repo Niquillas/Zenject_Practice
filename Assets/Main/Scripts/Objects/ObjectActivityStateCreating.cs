@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class ObjectActivityStateCreating : ObjectActivityState
 {
-    private ViewUIPanelMain _mainPanelView;
     private ServiceInput _inputService;
     private ServiceUtility _utilityService;
     private ServiceCenterHedgoHoggo _hedgoHoggoCenter;
     private LayerMask _viewCollisionMapLayerMask;
 
-    public ObjectActivityStateCreating(ViewUIPanelMain inputMainPanelView, 
-                                       ServiceInput inputInputService, 
-                                       ServiceUtility inputUtilityService,
-                                       ServiceCenterHedgoHoggo inputHedgoHoggoCenter,
-                                       LayerMask inputViewCollisionMapLayerMask)
+    public ObjectActivityStateCreating(
+        ServiceInput inputInputService, 
+        ServiceUtility inputUtilityService,
+        ServiceCenterHedgoHoggo inputHedgoHoggoCenter,
+        LayerMask inputViewCollisionMapLayerMask)
     {
-        _mainPanelView = inputMainPanelView;
+        Name = "Creating";
         _inputService = inputInputService;
         _utilityService = inputUtilityService;
         _hedgoHoggoCenter = inputHedgoHoggoCenter;
@@ -31,7 +29,6 @@ public class ObjectActivityStateCreating : ObjectActivityState
 
     public override void Setup()
     {
-        _mainPanelView.SetCurrentActivityStateText("Creating");
         _inputService.AllowTouchRaycasts = true;
         _inputService.MouseClickedEvent += OnMouseClicked;
     }

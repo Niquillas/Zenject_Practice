@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ServiceCenterSelected
 {
+    public delegate void HedgoHoggoSelectedDelegate(int inputCount);
+    public event HedgoHoggoSelectedDelegate HedgoHoggoSelectedEvent;
+
     private CollectionSelected _selectedCollection;
     private ObjectPointer.Factory _pointerObjectFactory;
     private ViewPointer.Factory _pointerViewFactory;
@@ -25,6 +28,10 @@ public class ServiceCenterSelected
         ObjectPointer pointerObject = _pointerObjectFactory.Create();
         ViewPointer pointerView = _pointerViewFactory.Create(pointerObject);
         _selectedCollection.RegisterHedgoHoggoPointer(inputHedgoHoggoView.Id, pointerObject, pointerView);
+        if (HedgoHoggoSelectedEvent != null)
+        {
+            HedgoHoggoSelectedEvent(_selectedCollection.SelectedHedgoHoggosCount);
+        }
         return pointerObject;
     }
 
@@ -50,6 +57,10 @@ public class ServiceCenterSelected
             pointerView.Dispose();
         }
         _selectedCollection.UnregisterHedgoHoggoPointer(inputHedgoHoggoId);
+        if(HedgoHoggoSelectedEvent != null)
+        {
+            HedgoHoggoSelectedEvent(_selectedCollection.SelectedHedgoHoggosCount);
+        }
     }
 
     public void DeSelectAllHedgoHoggos ()

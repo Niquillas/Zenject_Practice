@@ -5,6 +5,9 @@ using Zenject;
 
 public class ServiceCenterActivtyState : ITickable
 {
+    public delegate void CurrentStateChangedDelegate(string inputStateName);
+    public event CurrentStateChangedDelegate CurrentStateChangedEvent;
+
     public ObjectActivityState CurrentState { get; private set; }
 
     private CollectionActivityState _collectionActivityState;
@@ -50,6 +53,11 @@ public class ServiceCenterActivtyState : ITickable
 
             CurrentState = inputNextState;
             inputNextState.Setup();
+
+            if (CurrentStateChangedEvent != null)
+            {
+                CurrentStateChangedEvent(inputNextState.Name);
+            }
         }
     }
 }

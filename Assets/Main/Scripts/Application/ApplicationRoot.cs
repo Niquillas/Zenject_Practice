@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
-
-public class ApplicationRoot : IInitializable
+﻿public class ApplicationRoot : Zenject.IInitializable
 {
     private ServiceCenterActivtyState _activityStateCenter;
 

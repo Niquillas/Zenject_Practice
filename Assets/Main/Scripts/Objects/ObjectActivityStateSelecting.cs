@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class ObjectActivityStateSelecting : ObjectActivityState
 {
-    private ViewUIPanelMain _mainPanelView;
     private ServiceInput _inputService;
     private ServiceUtility _utilityService;
     private ServiceCenterSelected _selectedCenter;
     private LayerMask _viewCollisionMapLayerMask;
 
-    public ObjectActivityStateSelecting(ViewUIPanelMain inputMainPanelView,
-                                        ServiceInput inputInputService,
-                                        ServiceUtility inputUtilityService,
-                                        ServiceCenterSelected inputSelectedCenter,
-                                        LayerMask inputViewCollisionMapLayerMask)
+    public ObjectActivityStateSelecting(
+        ServiceInput inputInputService,
+        ServiceUtility inputUtilityService,
+        ServiceCenterSelected inputSelectedCenter,
+        LayerMask inputViewCollisionMapLayerMask)
     {
-        _mainPanelView = inputMainPanelView;
+        Name = "Selecting";
         _inputService = inputInputService;
         _utilityService = inputUtilityService;
         _selectedCenter = inputSelectedCenter;
@@ -32,7 +31,6 @@ public class ObjectActivityStateSelecting : ObjectActivityState
     public override void Setup()
     {
         _inputService.AllowTouchRaycasts = true;
-        _mainPanelView.SetCurrentActivityStateText("Selecting State");
         _inputService.MouseClickedEvent += OnMouseClicked;
     }
 

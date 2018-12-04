@@ -13,6 +13,14 @@ public class CollectionSelected
         }
     }
 
+    public int SelectedHedgoHoggosCount
+    { 
+        get
+        {
+            return _hedgoHoggoPointerViewMap.Keys.Count;
+        }
+    }
+
     public List<ObjectPointer> AllHedgoHoggoPointerObjects
     { 
         get

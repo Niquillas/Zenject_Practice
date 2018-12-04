@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Zenject;
-
-public class ControllerUIPanelMain : IInitializable
+﻿public class ControllerUIPanelMain
 {
     private readonly ServiceCenterActivtyState _activityStateCenter;
     private readonly ViewUIPanelMain _panelMain;
@@ -13,13 +9,14 @@ public class ControllerUIPanelMain : IInitializable
         _activityStateCenter = inputActivityStateCenter;
     }
 
+    [Zenject.Inject]
     public void Initialize()
     {
+        _activityStateCenter.CurrentStateChangedEvent += OnActivityStateChanged;
         _panelMain.SetCreatingButtonOnClick(OnCreatingButtonClicked);
         _panelMain.SetSelectingButtonOnClick(OnSelectingButtonClicked);
         _panelMain.SetDeletingButtonOnClick(OnDeletingButtonClicked);
         _panelMain.SetColoringButtonOnClick(OnColoringButtonClicked);
-
     }
 
     private void OnCreatingButtonClicked()
@@ -40,5 +37,10 @@ public class ControllerUIPanelMain : IInitializable
     private void OnDeletingButtonClicked()
     {
         _activityStateCenter.TransitionCurrentState(CollectionActivityState.ActivityStateId.Deleting);
+    }
+
+    public void OnActivityStateChanged(string inputStateName)
+    {
+        _panelMain.SetCurrentActivityStateText(inputStateName);
     }
 }

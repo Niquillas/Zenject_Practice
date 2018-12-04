@@ -5,19 +5,18 @@ using Zenject;
 
 public class ObjectActivityStateDeleting : ObjectActivityState
 {
-    private ViewUIPanelMain _mainPanelView;
     private ServiceInput _inputService;
     private ServiceUtility _utilityService;
     private ServiceCenterHedgoHoggo _hedgoHoggoCenter;
     private LayerMask _viewCollisionMapLayerMask;
 
-    public ObjectActivityStateDeleting(ViewUIPanelMain inputMainPanelView, 
-                                       ServiceInput inputInputService, 
-                                       ServiceUtility inputUtilityService,
-                                       ServiceCenterHedgoHoggo inputHedgoHoggoCenter,
-                                       LayerMask inputViewCollisionMapLayerMask)
+    public ObjectActivityStateDeleting(
+        ServiceInput inputInputService, 
+        ServiceUtility inputUtilityService,
+        ServiceCenterHedgoHoggo inputHedgoHoggoCenter,
+        LayerMask inputViewCollisionMapLayerMask)
     {
-        _mainPanelView = inputMainPanelView;
+        Name = "Deleting";
         _inputService = inputInputService;
         _utilityService = inputUtilityService;
         _hedgoHoggoCenter = inputHedgoHoggoCenter;
@@ -32,7 +31,6 @@ public class ObjectActivityStateDeleting : ObjectActivityState
     public override void Setup()
     {
         _inputService.AllowTouchRaycasts = true;
-        _mainPanelView.SetCurrentActivityStateText("Deleting State");
         _inputService.MouseClickedEvent += OnMouseClicked;
     }
 
