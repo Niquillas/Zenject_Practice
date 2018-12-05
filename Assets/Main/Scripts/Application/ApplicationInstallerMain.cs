@@ -50,7 +50,7 @@ public class ApplicationInstallerMain : MonoInstaller
         Container.BindInterfacesAndSelfTo<ObjectActivityStateSelecting>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateColoring>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
         Container.BindInterfacesAndSelfTo<ObjectActivityStateDeleting>().FromNew().AsSingle().WithArguments(_viewCollisionLayerMask).Lazy();
-        Container.BindFactory<int, ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
+        Container.BindFactory<ObjectHedgoHoggo, ObjectHedgoHoggo.Factory>();
         Container.BindFactory<ObjectPointer, ObjectPointer.Factory>();
     }
 }

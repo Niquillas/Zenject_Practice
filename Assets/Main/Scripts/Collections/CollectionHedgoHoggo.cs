@@ -3,84 +3,45 @@
 public class CollectionHedgoHoggo 
 {
     private ServiceLogger _logger;
-    private Dictionary<int, ObjectHedgoHoggo> _hedgoHoggoObjectsMap;
-    private Dictionary<int, ViewHedgoHoggo> _hedgoHoggoViewsMap;
-    private readonly Stack<int> _reusableIds;
-    private int _lastCreatedId;
+    private Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo> _hedgoHoggoMap;
 
     public CollectionHedgoHoggo (ServiceLogger inputLogger)
     {
         _logger = inputLogger;
-        _hedgoHoggoObjectsMap = new Dictionary<int, ObjectHedgoHoggo>();
-        _hedgoHoggoViewsMap = new Dictionary<int, ViewHedgoHoggo>();
-        _lastCreatedId = -1;
-        _reusableIds = new Stack<int>();
+        _hedgoHoggoMap = new Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo>();
     }
 
     public void RegisterHedgoHoggo(ObjectHedgoHoggo inputHedgoHoggoObject, ViewHedgoHoggo inputHedgoHoggoView)
     {
-        if (!_hedgoHoggoObjectsMap.ContainsKey(inputHedgoHoggoObject.Id))
+        if (!_hedgoHoggoMap.ContainsKey(inputHedgoHoggoView))
         {
-            _hedgoHoggoObjectsMap.Add(inputHedgoHoggoObject.Id, inputHedgoHoggoObject);
-            _logger.Log(string.Format("Registered Hedgo Hoggo Object with ID : {0}.!", inputHedgoHoggoObject.Id));
+            _hedgoHoggoMap.Add(inputHedgoHoggoView, inputHedgoHoggoObject);
+            _logger.Log("Registered Hedgo Hoggo");
         }
         else
         {
-            _logger.LogError(string.Format("Cannot register Hedgo Hoggo Object with ID : {0} since it already exists in object dictionary!", inputHedgoHoggoObject.Id));
-        }
-
-        if (!_hedgoHoggoViewsMap.ContainsKey(inputHedgoHoggoView.Id))
-        {
-            _hedgoHoggoViewsMap.Add(inputHedgoHoggoView.Id, inputHedgoHoggoView);
-            _logger.Log(string.Format("Registered Hedgo Hoggo View with ID : {0}.", inputHedgoHoggoView.Id));
-        }
-        else
-        {
-            _logger.LogError(string.Format("Cannot register Hedgo Hoggo View with ID : {0} since it already exists in view dictionary!", inputHedgoHoggoView.Id));
+            _logger.LogError("Cannot register Hedgo Hoggo since it already exists in object dictionary!");
         }
     }
 
-    public void UnRegisterHedgoHoggo(int inputId)
+    public void UnRegisterHedgoHoggo(ViewHedgoHoggo inputHedgoHoggoView)
     {
-        if (_hedgoHoggoObjectsMap.Remove(inputId))
+        if (_hedgoHoggoMap.Remove(inputHedgoHoggoView))
         {
-            _hedgoHoggoViewsMap.Remove(inputId);
-            _reusableIds.Push(inputId);
-            _logger.Log(string.Format("Unregistered Hedgo Hoggo Object with ID : {0}.", inputId));
+            _logger.Log("Unregistered Hedgo Hoggo");
         }
         else 
         {
-            _logger.LogError(string.Format("Cannot unregister Hedgo Hoggo Object with ID : {0} since it doesnt exist in object dictionary!", inputId));
+            _logger.LogError("Cannot unregister Hedgo Hoggo since it doesnt exist in object dictionary!");
         }
     }
 
-    public ObjectHedgoHoggo FetchHedgoHoggoObject(int inputId)
+    public ObjectHedgoHoggo FetchHedgoHoggoObject(ViewHedgoHoggo inputHedgoHoggoView)
     {
-        if (_hedgoHoggoObjectsMap.ContainsKey(inputId))
+        if (_hedgoHoggoMap.ContainsKey(inputHedgoHoggoView))
         {
-            return _hedgoHoggoObjectsMap[inputId];
+            return _hedgoHoggoMap[inputHedgoHoggoView];
         }
         return null;
-    }
-
-    public ViewHedgoHoggo FetchHedgoHoggoView(int inputId)
-    {
-        if (_hedgoHoggoViewsMap.ContainsKey(inputId))
-        {
-            return _hedgoHoggoViewsMap[inputId];
-        }
-        return null;
-    }
-
-    public int DetermineNextAvailableId()
-    {
-        if (_reusableIds.Count == 0)
-        {
-            return ++_lastCreatedId;
-        }
-        else
-        {
-            return _reusableIds.Pop();
-        }
     }
 }

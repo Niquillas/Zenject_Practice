@@ -49,11 +49,7 @@ public class ObjectActivityStateColoring : ObjectActivityState
                 ViewCollisionMap collisionMap = hit.transform.gameObject.GetComponent<ViewCollisionMap>();
                 if (collisionMap != null && collisionMap.HedgoHoggoView != null)
                 {
-                    ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoCenter.FetchHedgoHoggo(collisionMap.HedgoHoggoView);
-                    if (hedgoHoggoObject != null)
-                    {
-                        hedgoHoggoObject.UpdateCurrentColorToRandomColor();
-                    }
+                    _hedgoHoggoCenter.ColorHedgoHoggoToRandom(collisionMap.HedgoHoggoView);
                 }
             }
         }

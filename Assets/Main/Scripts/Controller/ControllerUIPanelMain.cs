@@ -1,4 +1,6 @@
-﻿public class ControllerUIPanelMain
+﻿using Zenject;
+
+public class ControllerUIPanelMain
 {
     private readonly ServiceCenterActivtyState _activityStateCenter;
     private readonly ViewUIPanelMain _panelMain;
@@ -9,7 +11,7 @@
         _activityStateCenter = inputActivityStateCenter;
     }
 
-    [Zenject.Inject]
+    [Inject]
     public void Initialize()
     {
         _activityStateCenter.CurrentStateChangedEvent += OnActivityStateChanged;

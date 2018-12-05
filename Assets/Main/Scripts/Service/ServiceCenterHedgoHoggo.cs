@@ -18,21 +18,25 @@ public class ServiceCenterHedgoHoggo
 
     public ObjectHedgoHoggo CreateHedgoHoggo ()
     {
-        int id = _hedgoHoggoCollection.DetermineNextAvailableId();
-        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create(id);
+        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create();
         ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
         _hedgoHoggoCollection.RegisterHedgoHoggo(hedgoHoggoObject, hedgoHoggoView);
         return hedgoHoggoObject;
     }
 
-    public ObjectHedgoHoggo FetchHedgoHoggo (ViewHedgoHoggo inputHedgoHoggoView)
+    public ObjectHedgoHoggo FetchHedgoHoggoObject (ViewHedgoHoggo inputHedgoHoggoView)
     {
-        return _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView.Id);
+        return _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView);
+    }
+
+    public void ColorHedgoHoggoToRandom(ViewHedgoHoggo inputHedgoHoggoView)
+    {
+        _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView).UpdateCurrentColorToRandomColor();
     }
 
     public void DestroyHedgoHoggo (ViewHedgoHoggo inputHedgoHoggoView)
     {
-        _hedgoHoggoCollection.UnRegisterHedgoHoggo(inputHedgoHoggoView.Id);
+        _hedgoHoggoCollection.UnRegisterHedgoHoggo(inputHedgoHoggoView);
         inputHedgoHoggoView.Dispose();
     }
 }

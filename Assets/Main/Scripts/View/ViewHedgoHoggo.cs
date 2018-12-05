@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Zenject;
-using System;
 
 public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemoryPool>, IDisposable
 {
@@ -16,11 +14,19 @@ public class ViewHedgoHoggo : MonoBehaviour, IPoolable<ObjectHedgoHoggo, IMemory
         }
     }
 
-    public int Id 
-    {
+    public Vector3 WorldPosition
+    { 
         get
         {
-            return _hedgoHoggoObject.Id;
+            return _selfTransform.position;
+        }
+    }
+
+    public float WorldHeight
+    { 
+        get
+        {
+            return 1;
         }
     }
 

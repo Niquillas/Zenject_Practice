@@ -1,88 +1,111 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 public class CollectionSelected
 {
-    public List<int> AllSelectedHedgoHoggos
+    public struct SelectableComponent
+    {
+        public ObjectPointer PointerObject { get; set; }
+        public ViewPointer PointerView { get; set; }
+    }
+
+    public int Count
+    { 
+        get
+        {
+            return _selectedMap.Count;
+        }
+    }
+
+    public List<ViewHedgoHoggo> Registered
     {
         get
         {
-            return _hedgoHoggoPointerObjectMap.Keys.ToList<int>();
+            return _selectedMap.Keys.ToList();
         }
     }
 
-    public int SelectedHedgoHoggosCount
-    { 
+    public List<ObjectPointer> PointerObjects
+    {
         get
         {
-            return _hedgoHoggoPointerViewMap.Keys.Count;
+            List<ObjectPointer> pointerObjects = new List<ObjectPointer>();
+            foreach(SelectableComponent selectableComponent in _selectedMap.Values)
+            {
+                pointerObjects.Add(selectableComponent.PointerObject);
+            }
+            return pointerObjects;
         }
     }
 
-    public List<ObjectPointer> AllHedgoHoggoPointerObjects
-    { 
+    public List<ViewPointer> PointerViews
+    {
         get
         {
-            return _hedgoHoggoPointerObjectMap.Values.ToList<ObjectPointer>();
+            List<ViewPointer> pointerViews = new List<ViewPointer>();
+            foreach (SelectableComponent selectableComponent in _selectedMap.Values)
+            {
+                pointerViews.Add(selectableComponent.PointerView);
+            }
+            return pointerViews;
         }
     }
 
     private ServiceLogger _logger;
-    private Dictionary<int, ObjectPointer> _hedgoHoggoPointerObjectMap;
-    private Dictionary<int, ViewPointer> _hedgoHoggoPointerViewMap;
+    private Dictionary<ViewHedgoHoggo, SelectableComponent> _selectedMap;
 
     public CollectionSelected(ServiceLogger inputServiceLogger)
     {
         _logger = inputServiceLogger;
-        _hedgoHoggoPointerObjectMap = new Dictionary<int, ObjectPointer>();
-        _hedgoHoggoPointerViewMap = new Dictionary<int, ViewPointer>();
+        _selectedMap = new Dictionary<ViewHedgoHoggo, SelectableComponent>();
     }
 
-    public bool CheckIfRegistered(int inputId)
+    public bool CheckIsRegistered(ViewHedgoHoggo inputHedgoHoggoView)
     {
-        return _hedgoHoggoPointerObjectMap.ContainsKey(inputId);
+        return _selectedMap.ContainsKey(inputHedgoHoggoView);
     }
 
-    public void RegisterHedgoHoggoPointer(int inputId, ObjectPointer inputPointerObject, ViewPointer inputPointerView)
+    public void Register(ViewHedgoHoggo inputHedgoHoggoView, ObjectPointer inputPointerObject, ViewPointer inputPointerView)
     {
-        if (!_hedgoHoggoPointerObjectMap.ContainsKey(inputId))
+        if (!_selectedMap.ContainsKey(inputHedgoHoggoView))
         {
-            _hedgoHoggoPointerObjectMap.Add(inputId, inputPointerObject);
-            _hedgoHoggoPointerViewMap.Add(inputId, inputPointerView);
-            _logger.Log(string.Format("Registered ID: {0} as selected.", inputId));
+            SelectableComponent selectableComponent = new SelectableComponent() 
+            {
+                PointerView = inputPointerView,
+                PointerObject = inputPointerObject
+            };
+            _selectedMap.Add(inputHedgoHoggoView, selectableComponent);
+            _logger.Log("Registered seletable view");
         }
         else
         {
-            _logger.LogError(string.Format("Cannot Register ID: {0} as selected since it already exists in dictionary!", inputId));
+            _logger.LogError("Could not register selectable view since it already exists in dictionary!");
         }
     }
 
-    public void UnregisterHedgoHoggoPointer(int inputId)
+    public void Unregister(ViewHedgoHoggo inputHedgHoggoView)
     {
-        if (_hedgoHoggoPointerObjectMap.ContainsKey(inputId))
+        if (_selectedMap.Remove(inputHedgHoggoView))
         {
-            _hedgoHoggoPointerObjectMap.Remove(inputId);
-            _hedgoHoggoPointerViewMap.Remove(inputId);
-            _logger.Log(string.Format("UnRegistered ID: {0} as deselected.", inputId));
+            _logger.Log("UnRegistered selectable");
         }
         else
         {
-            _logger.LogError(string.Format("Cannot UnRegister ID: {0} as deselected since it doesn't exist in dictionary!", inputId));
+            _logger.LogError("Could not unregister seletable view since it doesn't exist in dictionary!");
         }
     }
 
-    public ViewPointer FetchHedgoHoggoPointerView(int inputId)
+    public ViewPointer FetchPointerView(ViewHedgoHoggo inputHedgHoggoView)
     {
-        if (_hedgoHoggoPointerViewMap.ContainsKey(inputId))
+        if (_selectedMap.ContainsKey(inputHedgHoggoView))
         {
-            return _hedgoHoggoPointerViewMap[inputId];
+            return _selectedMap[inputHedgHoggoView].PointerView;
         }
         else
         {
-            _logger.LogError(string.Format("Cannot fetch ID: {0} since it doesn't exist in dictionary!", inputId));
+            _logger.LogError("Could not fetch pointer view since it doesn't exist in dictionary!");
         }
+
         return null;
     }
 }

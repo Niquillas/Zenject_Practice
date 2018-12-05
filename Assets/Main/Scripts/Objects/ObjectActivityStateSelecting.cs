@@ -25,7 +25,7 @@ public class ObjectActivityStateSelecting : ObjectActivityState
     public override void Cleanup()
     {
         _inputService.MouseClickedEvent -= OnMouseClicked;
-        _selectedCenter.DeSelectAllHedgoHoggos();
+        _selectedCenter.DeselectAllViews();
     }
 
     public override void Setup()
@@ -55,17 +55,17 @@ public class ObjectActivityStateSelecting : ObjectActivityState
 
                     if (hedgoHoggoView != null)
                     {
-                        if (_selectedCenter.CheckIfHedgoHoggoSelected(hedgoHoggoView))
+                        if (_selectedCenter.CheckViewSelected(hedgoHoggoView))
                         {
-                            _selectedCenter.DeSelectHedgoHoggo(hedgoHoggoView);
+                            _selectedCenter.DeselectView(hedgoHoggoView);
                         }
                         else
                         { 
-                            ObjectPointer pointerObject = _selectedCenter.SelectHedgoHoggo(hedgoHoggoView);
-                            Vector3 spawnPosition = hedgoHoggoView.SelfTransform.position;
-                            spawnPosition.y += 5;
-                            pointerObject.UpdatePosition(spawnPosition);
-                            _selectedCenter.SynchronizeHedgoHoggoPointers();
+                            ObjectPointer pointerObject = _selectedCenter.SelectView(hedgoHoggoView);
+                            Vector3 spawnPosition = hedgoHoggoView.WorldPosition;
+                            spawnPosition.y += hedgoHoggoView.WorldHeight / 2 + 3;
+                            pointerObject.UpdatePosition(spawnPosition);                                                      
+                            _selectedCenter.SynchronizePointers();
                         }
                     }
                 }

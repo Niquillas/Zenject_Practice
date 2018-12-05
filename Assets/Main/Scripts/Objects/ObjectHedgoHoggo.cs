@@ -6,18 +6,16 @@ using System;
 
 public class ObjectHedgoHoggo
 {
-    public class Factory : PlaceholderFactory<int, ObjectHedgoHoggo> {}
+    public class Factory : PlaceholderFactory<ObjectHedgoHoggo> {}
 
     public delegate void PropertiesUpdatedDelegate();
     public event PropertiesUpdatedDelegate PropertiesUpdatesEvent;
 
-    public int Id { get; private set; }
     public Color CurrentColor { get; private set; }
     public Vector3 CurrentPosition { get; private set; }
     
-    public ObjectHedgoHoggo (int inputId)
+    public ObjectHedgoHoggo ()
     {
-        Id = inputId;
         CurrentPosition = Vector3.zero;
         CurrentColor = Color.white;
     }

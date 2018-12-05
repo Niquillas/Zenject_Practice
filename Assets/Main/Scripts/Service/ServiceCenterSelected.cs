@@ -1,74 +1,90 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class ServiceCenterSelected
 {
-    public delegate void HedgoHoggoSelectedDelegate(int inputCount);
-    public event HedgoHoggoSelectedDelegate HedgoHoggoSelectedEvent;
+    public delegate void ViewSelectedDelegate(int inputCount);
+    public event ViewSelectedDelegate ViewSelectedEvent;
 
+    private ServiceCenterHedgoHoggo _hedgoHoggoCenter;
     private CollectionSelected _selectedCollection;
     private ObjectPointer.Factory _pointerObjectFactory;
     private ViewPointer.Factory _pointerViewFactory;
 
-    public ServiceCenterSelected (CollectionSelected inputSelectedCollection, ObjectPointer.Factory inputPointerObjectFactory, ViewPointer.Factory inputPointerViewFactory)
+    public ServiceCenterSelected (ServiceCenterHedgoHoggo inputHedgoHoggoCenter, CollectionSelected inputSelectedCollection, ObjectPointer.Factory inputPointerObjectFactory, ViewPointer.Factory inputPointerViewFactory)
     {
+        _hedgoHoggoCenter = inputHedgoHoggoCenter;
         _selectedCollection = inputSelectedCollection;
         _pointerObjectFactory = inputPointerObjectFactory;
         _pointerViewFactory = inputPointerViewFactory;
     }
 
-    public bool CheckIfHedgoHoggoSelected(ViewHedgoHoggo inputHedgoHoggoView)
+    public bool CheckViewSelected(ViewHedgoHoggo inputHedgHoggoView)
     {
-        return _selectedCollection.CheckIfRegistered(inputHedgoHoggoView.Id);
+        return _selectedCollection.CheckIsRegistered(inputHedgHoggoView);
     }
 
-    public ObjectPointer SelectHedgoHoggo(ViewHedgoHoggo inputHedgoHoggoView)
+    public ObjectPointer SelectView(ViewHedgoHoggo inputHedgHoggoView)
     {
         ObjectPointer pointerObject = _pointerObjectFactory.Create();
         ViewPointer pointerView = _pointerViewFactory.Create(pointerObject);
-        _selectedCollection.RegisterHedgoHoggoPointer(inputHedgoHoggoView.Id, pointerObject, pointerView);
-        if (HedgoHoggoSelectedEvent != null)
+
+        _selectedCollection.Register(inputHedgHoggoView, pointerObject, pointerView);
+
+        if (ViewSelectedEvent != null)
         {
-            HedgoHoggoSelectedEvent(_selectedCollection.SelectedHedgoHoggosCount);
+            ViewSelectedEvent(_selectedCollection.Count);
         }
         return pointerObject;
     }
 
-    public void SynchronizeHedgoHoggoPointers()
+    public void SynchronizePointers()
     {
-        List<ObjectPointer> hedgoHoggoPointerObjects = _selectedCollection.AllHedgoHoggoPointerObjects;
-        for (int i = 0; i < hedgoHoggoPointerObjects.Count; i++)
+        List<ObjectPointer> pointerObjects = _selectedCollection.PointerObjects;
+        for (int i = 0; i < pointerObjects.Count; i++)
         {
-            hedgoHoggoPointerObjects[i].SignalAnimationRestart();
+            pointerObjects[i].SignalAnimationRestart();
         }
     }
 
-    public void DeSelectHedgoHoggo(ViewHedgoHoggo inputHedgoHoggoView)
+    public void ColorAllSelected()
     {
-        DeselectHedgoHoggo(inputHedgoHoggoView.Id);
+        List<ViewHedgoHoggo> hedgoHoggoViews = _selectedCollection.Registered;
+        for (int i = 0; i < hedgoHoggoViews.Count; i++)
+        {
+            _hedgoHoggoCenter.ColorHedgoHoggoToRandom(hedgoHoggoViews[i]);
+        }
     }
 
-    private void DeselectHedgoHoggo(int inputHedgoHoggoId)
+    public void DeleteAllSelected()
     {
-        ViewPointer pointerView = _selectedCollection.FetchHedgoHoggoPointerView(inputHedgoHoggoId);
+        List<ViewHedgoHoggo> hedgoHoggoViews = _selectedCollection.Registered;
+        for (int i = 0; i < hedgoHoggoViews.Count; i++)
+        {
+            DeselectView(hedgoHoggoViews[i]);
+            _hedgoHoggoCenter.DestroyHedgoHoggo(hedgoHoggoViews[i]);
+        }
+    }
+
+    public void DeselectView(ViewHedgoHoggo inputHedgHoggoView)
+    {
+        ViewPointer pointerView = _selectedCollection.FetchPointerView(inputHedgHoggoView);
         if (pointerView != null)
         {
             pointerView.Dispose();
         }
-        _selectedCollection.UnregisterHedgoHoggoPointer(inputHedgoHoggoId);
-        if(HedgoHoggoSelectedEvent != null)
+        _selectedCollection.Unregister(inputHedgHoggoView);
+        if (ViewSelectedEvent != null)
         {
-            HedgoHoggoSelectedEvent(_selectedCollection.SelectedHedgoHoggosCount);
+            ViewSelectedEvent(_selectedCollection.Count);
         }
     }
 
-    public void DeSelectAllHedgoHoggos ()
+    public void DeselectAllViews ()
     {
-        List<int> hedgoHoggoIds = _selectedCollection.AllSelectedHedgoHoggos;
-        for (int i = 0; i < hedgoHoggoIds.Count; i++)
+        List<ViewHedgoHoggo> selected = _selectedCollection.Registered;
+        for (int i = 0; i < selected.Count; i++)
         {
-            DeselectHedgoHoggo(hedgoHoggoIds[i]);
+            DeselectView(selected[i]);
         }
     }
 }
