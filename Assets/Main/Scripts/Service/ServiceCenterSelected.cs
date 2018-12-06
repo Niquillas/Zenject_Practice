@@ -18,12 +18,12 @@ public class ServiceCenterSelected
         _pointerViewFactory = inputPointerViewFactory;
     }
 
-    public bool CheckViewSelected(ViewHedgoHoggo inputHedgHoggoView)
+    public bool CheckIsSelected(ViewHedgoHoggo inputHedgHoggoView)
     {
         return _selectedCollection.CheckIsRegistered(inputHedgHoggoView);
     }
 
-    public ObjectPointer SelectView(ViewHedgoHoggo inputHedgHoggoView)
+    public ObjectPointer Select(ViewHedgoHoggo inputHedgHoggoView)
     {
         ObjectPointer pointerObject = _pointerObjectFactory.Create();
         ViewPointer pointerView = _pointerViewFactory.Create(pointerObject);
@@ -60,12 +60,12 @@ public class ServiceCenterSelected
         List<ViewHedgoHoggo> hedgoHoggoViews = _selectedCollection.Registered;
         for (int i = 0; i < hedgoHoggoViews.Count; i++)
         {
-            DeselectView(hedgoHoggoViews[i]);
+            Deselect(hedgoHoggoViews[i]);
             _hedgoHoggoCenter.DestroyHedgoHoggo(hedgoHoggoViews[i]);
         }
     }
 
-    public void DeselectView(ViewHedgoHoggo inputHedgHoggoView)
+    public void Deselect(ViewHedgoHoggo inputHedgHoggoView)
     {
         ViewPointer pointerView = _selectedCollection.FetchPointerView(inputHedgHoggoView);
         if (pointerView != null)
@@ -79,12 +79,12 @@ public class ServiceCenterSelected
         }
     }
 
-    public void DeselectAllViews ()
+    public void DeselectAll ()
     {
         List<ViewHedgoHoggo> selected = _selectedCollection.Registered;
         for (int i = 0; i < selected.Count; i++)
         {
-            DeselectView(selected[i]);
+            Deselect(selected[i]);
         }
     }
 }

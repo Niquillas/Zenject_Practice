@@ -49,8 +49,8 @@ public class ObjectActivityStateCreating : ObjectActivityState
                 ViewCollisionMap collisionMap = hit.transform.gameObject.GetComponent<ViewCollisionMap>();
                 if (collisionMap != null && collisionMap.FloorTransform != null)
                 {
-                    ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoCenter.CreateHedgoHoggo();
-                    hedgoHoggoObject.UpdateCurrentPosition(hit.point);
+                    ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoCenter.CreateHedgoHoggo();
+                    _hedgoHoggoCenter.PositionHedgoHoggoViaFloor(hedgoHoggoView, hit.point);
                 }
             }
         }

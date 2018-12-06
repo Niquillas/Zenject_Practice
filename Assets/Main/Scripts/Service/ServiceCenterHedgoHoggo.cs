@@ -16,17 +16,20 @@ public class ServiceCenterHedgoHoggo
         _hedgoHoggoViewFactory = inputHedgoHoggoViewFactory;
     }
 
-    public ObjectHedgoHoggo CreateHedgoHoggo ()
+    public ViewHedgoHoggo CreateHedgoHoggo ()
     {
         ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoObjectFactory.Create();
         ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(hedgoHoggoObject);
         _hedgoHoggoCollection.RegisterHedgoHoggo(hedgoHoggoObject, hedgoHoggoView);
-        return hedgoHoggoObject;
+        return hedgoHoggoView;
     }
 
-    public ObjectHedgoHoggo FetchHedgoHoggoObject (ViewHedgoHoggo inputHedgoHoggoView)
+    public void PositionHedgoHoggoViaFloor(ViewHedgoHoggo inputHedgoHoggoView, Vector3 inputPosition)
     {
-        return _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView);
+        ObjectHedgoHoggo hedgoHoggoObject = _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView);
+        Vector3 flooredPosition = inputPosition;
+        flooredPosition.y += inputHedgoHoggoView.WorldHeight / 2;
+        hedgoHoggoObject.UpdateCurrentPosition(flooredPosition);
     }
 
     public void ColorHedgoHoggoToRandom(ViewHedgoHoggo inputHedgoHoggoView)

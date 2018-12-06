@@ -25,7 +25,7 @@ public class ObjectActivityStateSelecting : ObjectActivityState
     public override void Cleanup()
     {
         _inputService.MouseClickedEvent -= OnMouseClicked;
-        _selectedCenter.DeselectAllViews();
+        _selectedCenter.DeselectAll();
     }
 
     public override void Setup()
@@ -55,13 +55,13 @@ public class ObjectActivityStateSelecting : ObjectActivityState
 
                     if (hedgoHoggoView != null)
                     {
-                        if (_selectedCenter.CheckViewSelected(hedgoHoggoView))
+                        if (_selectedCenter.CheckIsSelected(hedgoHoggoView))
                         {
-                            _selectedCenter.DeselectView(hedgoHoggoView);
+                            _selectedCenter.Deselect(hedgoHoggoView);
                         }
                         else
                         { 
-                            ObjectPointer pointerObject = _selectedCenter.SelectView(hedgoHoggoView);
+                            ObjectPointer pointerObject = _selectedCenter.Select(hedgoHoggoView);
                             Vector3 spawnPosition = hedgoHoggoView.WorldPosition;
                             spawnPosition.y += hedgoHoggoView.WorldHeight / 2 + 3;
                             pointerObject.UpdatePosition(spawnPosition);                                                      
