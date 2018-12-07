@@ -9,6 +9,8 @@ public class ViewUIPanelMain : ViewUIPanel
     [SerializeField] private Button _selectingButton;
     [SerializeField] private Button _coloringButton;
     [SerializeField] private Button _deletingButton;
+    [SerializeField] private Button _savingButton;
+    [SerializeField] private Button _loadingButton;
 
     public void SetCreatingButtonOnClick(UnityAction inputCallback)
     {
@@ -28,6 +30,16 @@ public class ViewUIPanelMain : ViewUIPanel
     public void SetDeletingButtonOnClick(UnityAction inputCallback)
     {
         _deletingButton.onClick.AddListener(inputCallback);
+    }
+
+    public void SetSavingButtonOnClick(UnityAction inputCallback)
+    {
+        _savingButton.onClick.AddListener(inputCallback);
+    }
+
+    public void SetLoadingButtonOnClick(UnityAction inputCallback)
+    {
+        _loadingButton.onClick.AddListener(inputCallback);
     }
 
     public void SetCurrentActivityStateText (string inputText)

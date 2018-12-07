@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class ServiceCenterHedgoHoggo
 {
@@ -37,9 +35,41 @@ public class ServiceCenterHedgoHoggo
         _hedgoHoggoCollection.FetchHedgoHoggoObject(inputHedgoHoggoView).UpdateCurrentColorToRandomColor();
     }
 
+    public void DestroyAllHedgoHoggos ()
+    {
+        List<ViewHedgoHoggo> hedgoHoggoViews = _hedgoHoggoCollection.RegisteredHedgoHoggoViews;
+        for (int i = 0; i < hedgoHoggoViews.Count; i++)
+        {
+            DestroyHedgoHoggo(hedgoHoggoViews[i]);
+        }
+    }
+
     public void DestroyHedgoHoggo (ViewHedgoHoggo inputHedgoHoggoView)
     {
         _hedgoHoggoCollection.UnRegisterHedgoHoggo(inputHedgoHoggoView);
         inputHedgoHoggoView.Dispose();
+    }
+
+    public void Save ()
+    {
+        _hedgoHoggoCollection.Save();
+    }
+
+    public void Load ()
+    {
+        DestroyAllHedgoHoggos();
+
+        CollectionHedgoHoggo.Data saveData = _hedgoHoggoCollection.Load();
+
+        if (saveData != null)
+        {
+            for (int i = 0; i < saveData.HedgoHoggos.Count; i++)
+            {
+                ViewHedgoHoggo hedgoHoggoView = _hedgoHoggoViewFactory.Create(saveData.HedgoHoggos[i]);
+                _hedgoHoggoCollection.RegisterHedgoHoggo(saveData.HedgoHoggos[i], hedgoHoggoView);
+                saveData.HedgoHoggos[i].UpdateCurrentPosition(saveData.HedgoHoggos[i].CurrentPosition);
+                saveData.HedgoHoggos[i].UpdateCurrentColor(saveData.HedgoHoggos[i].CurrentColor);
+            }
+        }
     }
 }

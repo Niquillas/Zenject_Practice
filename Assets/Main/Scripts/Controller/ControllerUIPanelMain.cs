@@ -2,12 +2,14 @@
 
 public class ControllerUIPanelMain
 {
+    private readonly ServiceCenterHedgoHoggo _hedgoHoggoCenter;
     private readonly ServiceCenterActivtyState _activityStateCenter;
     private readonly ViewUIPanelMain _panelMain;
 
-    public ControllerUIPanelMain (ViewUIPanelMain inputPanelMain, ServiceCenterActivtyState inputActivityStateCenter)
+    public ControllerUIPanelMain (ViewUIPanelMain inputPanelMain, ServiceCenterHedgoHoggo inputHedgoHoggoService, ServiceCenterActivtyState inputActivityStateCenter)
     {
         _panelMain = inputPanelMain;
+        _hedgoHoggoCenter = inputHedgoHoggoService;
         _activityStateCenter = inputActivityStateCenter;
     }
 
@@ -19,6 +21,8 @@ public class ControllerUIPanelMain
         _panelMain.SetSelectingButtonOnClick(OnSelectingButtonClicked);
         _panelMain.SetDeletingButtonOnClick(OnDeletingButtonClicked);
         _panelMain.SetColoringButtonOnClick(OnColoringButtonClicked);
+        _panelMain.SetSavingButtonOnClick(OnSavingButtonClicked);
+        _panelMain.SetLoadingButtonOnClick(OnLoadingButtonClicked);
     }
 
     private void OnCreatingButtonClicked()
@@ -39,6 +43,16 @@ public class ControllerUIPanelMain
     private void OnDeletingButtonClicked()
     {
         _activityStateCenter.TransitionCurrentState(CollectionActivityState.ActivityStateId.Deleting);
+    }
+
+    private void OnSavingButtonClicked()
+    {
+        _hedgoHoggoCenter.Save();
+    }
+
+    private void OnLoadingButtonClicked()
+    {
+        _hedgoHoggoCenter.Load();
     }
 
     public void OnActivityStateChanged(string inputStateName)

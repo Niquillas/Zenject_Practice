@@ -1,7 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class CollectionHedgoHoggo 
 {
+    [Serializable()]
+    public class Data
+    {
+        public List<ObjectHedgoHoggo> HedgoHoggos { get; private set; }
+
+        public Data (CollectionHedgoHoggo inputHedgoHoggoCollection)
+        {
+            HedgoHoggos = inputHedgoHoggoCollection._hedgoHoggoMap.Values.ToList();
+        }
+    }
+
+    public List<ViewHedgoHoggo> RegisteredHedgoHoggoViews
+    { 
+        get
+        {
+            return _hedgoHoggoMap.Keys.ToList();
+        }
+    }
+
     private ServiceLogger _logger;
     private Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo> _hedgoHoggoMap;
 
@@ -43,5 +66,44 @@ public class CollectionHedgoHoggo
             return _hedgoHoggoMap[inputHedgoHoggoView];
         }
         return null;
+    }
+
+    public Data Save()
+    {
+        Data saveData = null;
+
+        try
+        {
+            Stream stream = File.Open("collectionHedgoHoggoData.xml", FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+            saveData = new Data(this);
+            formatter.Serialize(stream, saveData);
+            stream.Close();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(String.Format("Couldn't save data because of exception : {0}", e.ToString()));
+        }
+
+        return saveData;
+    }
+
+    public Data Load()
+    {
+        Data saveData = null;
+
+        try
+        {
+            Stream stream = File.Open("collectionHedgoHoggoData.xml", FileMode.Open);
+            BinaryFormatter formatter = new BinaryFormatter();
+            saveData = (Data)formatter.Deserialize(stream);
+            stream.Close();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(String.Format("Couldn't load data because of exception : {0}", e.ToString()));
+        }
+
+        return saveData;
     }
 }
