@@ -1,0 +1,16 @@
+{
+    "name": "AutomatedTesting",
+    "references": [
+        "Zenject-TestFramework",
+        "Main",
+        "Zenject"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
