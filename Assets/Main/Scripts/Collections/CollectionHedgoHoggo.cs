@@ -25,11 +25,13 @@ public class CollectionHedgoHoggo
         }
     }
 
+    private string _savePath;
     private ServiceLogger _logger;
     private Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo> _hedgoHoggoMap;
 
     public CollectionHedgoHoggo (ServiceLogger inputLogger)
     {
+        _savePath = Path.Combine(UnityEngine.Application.persistentDataPath, "collectionHedgoHoggoData.xml");
         _logger = inputLogger;
         _hedgoHoggoMap = new Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo>();
     }
@@ -74,7 +76,7 @@ public class CollectionHedgoHoggo
 
         try
         {
-            Stream stream = File.Open("collectionHedgoHoggoData.xml", FileMode.Create);
+            Stream stream = File.Open(_savePath, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
             saveData = new Data(this);
             formatter.Serialize(stream, saveData);
@@ -94,7 +96,7 @@ public class CollectionHedgoHoggo
 
         try
         {
-            Stream stream = File.Open("collectionHedgoHoggoData.xml", FileMode.Open);
+            Stream stream = File.Open(_savePath, FileMode.Open);
             BinaryFormatter formatter = new BinaryFormatter();
             saveData = (Data)formatter.Deserialize(stream);
             stream.Close();
