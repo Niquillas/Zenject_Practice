@@ -1,0 +1,14 @@
+{
+    "name": "RuntimeTesting",
+    "references": [
+        "Zenject-TestFramework",
+        "Main",
+        "Zenject"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
