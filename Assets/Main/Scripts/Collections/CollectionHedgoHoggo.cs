@@ -25,6 +25,14 @@ public class CollectionHedgoHoggo
         }
     }
 
+    public List<ObjectHedgoHoggo> RegisteredHedgoHoggoObjects
+    {
+        get
+        {
+            return _hedgoHoggoMap.Values.ToList();
+        }
+    }
+
     private string _savePath;
     private ServiceLogger _logger;
     private Dictionary<ViewHedgoHoggo, ObjectHedgoHoggo> _hedgoHoggoMap;

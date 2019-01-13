@@ -8,7 +8,7 @@ public class SampleUnitTest : ZenjectUnitTestFixture
     [SetUp]
     public void CommonInstall()
     {
-        Container.Bind<ServiceUtility>().AsSingle();
+        // Binding statements here
     }
 
     [Test]
